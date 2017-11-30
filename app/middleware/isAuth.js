@@ -3,6 +3,7 @@ module.exports = options => {
     if (ctx.isAuthenticated()) {
       return next();
     } else {
+      ctx.flash('error', 'Sorry, but you must be registered first!');
       ctx.redirect('/');
     }
   };
