@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const nodemailer = require('nodemailer');
 
 exports.hashPassword = async(password) => {
   try {
@@ -17,3 +18,28 @@ exports.comparePasswords = async(inputPassword, hashedPassword) => {
     throw new Error('Comparing failed', error);
   }
 };
+
+const transport = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: '',
+    pass: ''
+  },
+  tls: {
+    rejectUnauthorized: false
+  }
+});
+
+exports.sendEmail = (from, to, subject, html) => {
+  return new Promise((resolve, reject) => {
+    transport.sendMail({
+      from,
+      subject,
+      to,
+      html
+    }, (err, info) => {
+      if (err) reject(err);
+      resolve(info);
+    });
+  });
+}

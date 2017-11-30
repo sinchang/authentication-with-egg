@@ -3,7 +3,7 @@
 const Controller = require('egg').Controller;
 const Joi = require('joi');
 const randomstring = require('randomstring');
-const { hashPassword } = require('../util')
+const { hashPassword, sendEmail } = require('../util')
 
 const userSchema = Joi.object().keys({
   email: Joi.string().email().required(),
@@ -22,9 +22,9 @@ class UserController extends Controller {
 
     try {
       const result = Joi.validate(ctx.request.body, userSchema);
-      console.log(result)
+
       if (result.error) {
-        // ctx.app.middlewares.flash('error', 'Data is not valid. Please try again.');
+        ctx.flash('error', 'Data is not valid. Please try again.');
         ctx.redirect('/users/register');
         return;
       }
@@ -32,13 +32,12 @@ class UserController extends Controller {
       // Checking if email is already taken
       const user = await ctx.service.user.findOne({ 'email': result.value.email });
       if (user) {
-        // ctx.app.middlewares.flash('error', 'Email is already in use.');
+        ctx.flash('error', 'Email is already in use.');
         ctx.redirect('/users/register');
         return;
       }
 
       // Hash the password
-      console.log(hashPassword)
       const hash = await hashPassword(result.value.password);
 
       // Generate secret token
@@ -57,6 +56,24 @@ class UserController extends Controller {
 
       const newUser = await ctx.service.user.add(result.value);
       console.log('newUser', newUser);
+
+      // Compose email
+      // const html = `Hi there,
+      // <br/>
+      // Thank you for registering!
+      // <br/><br/>
+      // Please verify your email by typing the following token:
+      // <br/>
+      // Token: <b>${secretToken}</b>
+      // <br/>
+      // On the following page:
+      // <a href="http://localhost:7001/users/verify">http://localhost:7001/users/verify</a>
+      // <br/><br/>
+      // Have a pleasant day.`
+
+      // Send email
+      // await sendEmail('hi@sinchang.me', result.value.email, 'Please verify your email!', html);
+
       ctx.redirect('/users/login');
     } catch(error) {
       throw new Error(error)
@@ -68,11 +85,18 @@ class UserController extends Controller {
   }
 
   async renderDashboard() {
-    await this.ctx.render('dashboard.art');
+    await this.ctx.render('dashboard.art', {
+      username: this.ctx.user.username
+    });
   }
 
   async renderVerify() {
     await this.ctx.render('verify.art');
+  }
+
+  async handleLogout() {
+    this.ctx.logout();
+    this.ctx.redirect('/');
   }
 }
 

@@ -14,7 +14,6 @@ module.exports = app => {
       email: email,
       password: password
     };
-    console.log(user)
     app.passport.doVerify(req, user, done);
   }));
 };

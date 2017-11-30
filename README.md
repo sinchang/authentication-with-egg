@@ -6,22 +6,23 @@
 
 see [egg docs][egg] for more detail.
 
-### Development
+## Development
 
 ```bash
 $ npm i
+$ start mongodb server
 $ npm run dev
 $ open http://localhost:7001/
 ```
 
-### Deploy
+## Deploy
 
 ```bash
 $ npm start
 $ npm stop
 ```
 
-### npm scripts
+## npm scripts
 
 - Use `npm run lint` to check code style.
 - Use `npm test` to run unit test.
@@ -29,3 +30,7 @@ $ npm stop
 
 
 [egg]: https://eggjs.org
+
+## Credits
+
+- [Site Authentication With Node](https://www.youtube.com/playlist?list=PLSpJkDDmpFZ4P0Ont_VBj1uh9DGniSc8b)
