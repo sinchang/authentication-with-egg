@@ -1,7 +1,5 @@
 # authentication-with-egg
 
-
-
 ## QuickStart
 
 <!-- add docs here for user -->

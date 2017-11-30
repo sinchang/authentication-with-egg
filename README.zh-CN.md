@@ -1,7 +1,5 @@
 # authentication-with-egg
 
-
-
 ## 快速入门
 
 <!-- 在此次添加使用文档 -->

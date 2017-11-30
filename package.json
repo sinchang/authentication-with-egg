@@ -4,11 +4,19 @@
   "description": "",
   "private": true,
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "egg": "^2.0.0",
+    "egg-mongoose": "^2.1.1",
     "egg-passport": "^2.0.0",
     "egg-passport-github": "^1.0.0",
     "egg-passport-google": "^1.0.0",
-    "egg-scripts": "^2.1.0"
+    "egg-passport-local": "^1.1.0",
+    "egg-scripts": "^2.1.0",
+    "egg-view-art": "^1.0.1",
+    "joi": "^13.0.2",
+    "koa-better-flash": "^0.0.3",
+    "randomstring": "^1.1.5",
+    "util": "^0.10.3"
   },
   "devDependencies": {
     "autod": "^3.0.1",
