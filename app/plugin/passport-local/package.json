@@ -1,0 +1,9 @@
+{
+  "name": "egg-passport-local",
+  "eggPlugin": {
+    "name": "passportLocal",
+    "dependencies": [
+      "passport"
+    ]
+  }
+}

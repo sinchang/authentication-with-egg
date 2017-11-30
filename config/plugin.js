@@ -1,5 +1,7 @@
 'use strict';
 
+const path = require('path');
+
 // had enabled by egg
 // exports.static = true;
 exports.passport = {
@@ -9,7 +11,7 @@ exports.passport = {
 
 exports.passportLocal = {
   enable: true,
-  package:'egg-passport-local',
+  path: path.join(__dirname, '../app/plugin/passport-local'),
 };
 
 exports.passportGoogle = {
