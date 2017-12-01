@@ -11,17 +11,18 @@ module.exports = app => {
 
     try {
       // 1) Check if the email already exists
-      const user = await ctx.service.user.findOne({
+      const existUser = await ctx.service.user.findOne({
         'email': email
       });
 
-      if (!user) {
+      if (!existUser) {
         ctx.flash('error', 'Unknown User');
         return null;
       }
 
       // 2) Check if the password is correct
-      const isValid = comparePasswords(password, user.password);
+      const isValid = await comparePasswords(password, existUser.password);
+
       if (!isValid) {
         ctx.flash('error', 'Unknown Password');
         return null;
@@ -31,7 +32,7 @@ module.exports = app => {
       // if (!user.active) {
       //   throw new Error('status = 401')
       // }
-      return user;
+      return existUser;
     } catch (error) {
       return null;
     }
